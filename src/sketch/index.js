@@ -1,57 +1,74 @@
 const sketch = (p) => {
-  let rows = 0
-  let cols = 0
-  const scl = 20
   const w = window.innerWidth
   const h = window.innerHeight
-  let speedSlider
-  let speed = -0.01
+  let rows = 0
+  let cols = 0
 
-  //2D array where we'll store x and y values for each point on the triangle strip
+  const scale = 15
+
   let terrain = []
-  let flying = 0
+  let flyingSpeed = 0
+
+  let speedSlider
+  let heightSlider
+  let depthSlider
 
   p.setup = function setup() {
     p.createCanvas(w, h, p.WEBGL)
+    //*set number of columns and rows to width / height divided by the scale of each triangle
+    cols = w / scale
+    rows = h / scale
 
-    //set number of columns and rows to width / height divided by the scale of each triangle
-    cols = w / scl
-    rows = h / scl
-    speedSlider = p.createSlider(0.01, 0.08, 0, 0)
+    //*sliders for manipulating the visuals
+    speedSlider = p.createSlider(0, 0.2, 0.025, 0)
     speedSlider.position(10, 10)
     speedSlider.style('width', '300px')
+
+    heightSlider = p.createSlider(-350, 0, -150, 0)
+    heightSlider.position(10, 30)
+    heightSlider.style('width', '300px')
+
+    depthSlider = p.createSlider(0, 350, 100, 0)
+    depthSlider.position(10, 50)
+    depthSlider.style('width', '300px')
   }
 
   p.draw = function draw() {
-    speed = speedSlider.value()
-    flying -= speed
-    let yoff = flying
-    //setup 2d array to hold x and y values from the previous vertex
+    flyingSpeed -= speedSlider.value()
+    let yoff = flyingSpeed
+
     for (let y = 0; y < rows; y++) {
       let xoff = 0
       terrain[y] = []
 
       for (let x = 0; x < cols; x++) {
-        terrain[y][x] = p.map(p.noise(xoff, yoff), 0, 1, -200, 200)
+        terrain[y][x] = p.map(
+          p.noise(xoff, yoff),
+          0,
+          1,
+          heightSlider.value(),
+          depthSlider.value()
+        )
         xoff += 0.1
       }
       yoff += 0.1
     }
-    p.background(100)
+    p.background(220)
     p.stroke(255)
+
     p.fill(0)
-    p.frameRate(30)
-    //rotate sketch along x axis
-    p.rotateX(p.PI / 3)
-    //move sketch to align center after the rotation
-    p.translate(-w / 2, -h / 2 + 80)
-    //loop to draw grid of triangles
+
+    //* rotate sketch along x axis
+    p.rotateX(p.PI / 3.5)
+    //* move sketch to align center after the rotation
+    p.translate(-w / 2, -h / 2 + 50)
+    //* loop to draw grid of triangles
     for (let y = 0; y < rows - 1; y++) {
       p.beginShape(p.TRIANGLE_STRIP)
       for (let x = 0; x < cols; x++) {
-        //drawing triangles by adding x + y vertex
-        p.vertex(x * scl, y * scl, terrain[y][x])
-        p.vertex(x * scl, (y + 1) * scl, terrain[y + 1][x])
+        //* drawing triangles by adding x + y vertex
+        p.vertex(x * scale, y * scale, terrain[y][x])
+        p.vertex(x * scale, (y + 1) * scale, terrain[y + 1][x])
       }
       p.endShape()
     }
