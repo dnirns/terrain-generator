@@ -1,18 +1,8 @@
-const sketch = (p) => {
-  let rotation = 0
+import P5Wrapper from 'react-p5-wrapper'
+import sketch from '../sketch'
 
-  p.setup = function () {
-    p.createCanvas(window.innerWidth, window.innerHeight)
-  }
-
-  p.draw = function () {
-    if (p.mouseIsPressed) {
-      p.fill(0)
-    } else {
-      p.fill(255)
-    }
-    p.ellipse(p.mouseX, p.mouseY, 80, 80)
-  }
+const Sketch = () => {
+  return <P5Wrapper sketch={sketch} />
 }
 
-export default sketch
+export default Sketch
