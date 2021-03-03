@@ -4,7 +4,7 @@ const sketch = (p) => {
   let rows = 0
   let cols = 0
 
-  const scale = 15
+  const scale = 20
 
   let terrain = []
   let flyingSpeed = 0
@@ -20,15 +20,15 @@ const sketch = (p) => {
     rows = h / scale
 
     //*sliders for manipulating the visuals
-    speedSlider = p.createSlider(0, 0.2, 0.025, 0)
+    speedSlider = p.createSlider(0, 0.2, 0.004, 0)
     speedSlider.position(10, 10)
     speedSlider.style('width', '300px')
 
-    heightSlider = p.createSlider(-350, 0, -150, 0)
+    heightSlider = p.createSlider(-350, 0, -180, 0)
     heightSlider.position(10, 30)
     heightSlider.style('width', '300px')
 
-    depthSlider = p.createSlider(0, 350, 100, 0)
+    depthSlider = p.createSlider(0, 350, 50, 0)
     depthSlider.position(10, 50)
     depthSlider.style('width', '300px')
   }
