@@ -41,21 +41,9 @@ const sketch = (p) => {
     cols = w / scale
     rows = h / scale
 
-    startButton = p.createButton('PLAY')
-    startButton.position(10, 10)
+    startButton = p.createButton('START / STOP')
+    startButton.position(w / 2 - 50, 10)
     startButton.mousePressed(playSound)
-    //*sliders for manipulating the visuals
-    // speedSlider = p.createSlider(0, 0.2, 0.004, 0)
-    // speedSlider.position(10, 10)
-    // speedSlider.style('width', '300px')
-
-    // heightSlider = p.createSlider(-350, 0, -180, 0)
-    // heightSlider.position(10, 30)
-    // heightSlider.style('width', '300px')
-
-    // depthSlider = p.createSlider(0, 350, 50, 0)
-    // depthSlider.position(10, 50)
-    // depthSlider.style('width', '300px')
 
     //*set audio source volume
   }
@@ -69,19 +57,19 @@ const sketch = (p) => {
   }
   p.draw = function draw() {
     //*get analysis from the FFT algorythm
-    // fft.smooth(0.7)
+    fft.smooth(0.7)
     fft.analyze()
 
     //*get treble and bass energy values from result of analysis
     let treble = fft.getEnergy('treble')
-    let bass = fft.getEnergy('bass')
+    let bass = fft.getEnergy('lowMid')
 
     //*assign energy values to variables to be used in terrain generation
     let depth = -bass * 1.5
     let height = treble * 2.2
 
     //*alter flyingspeed based on value of slider input
-    flyingSpeed -= 0.008
+    flyingSpeed -= 0.025
     let yoff = flyingSpeed
     for (let y = 0; y < rows; y++) {
       let xoff = 0
@@ -93,7 +81,7 @@ const sketch = (p) => {
       }
       yoff += 0.1
     }
-    p.background('rgb(113, 77, 242)')
+    p.background('rgb(181, 187, 220)')
     p.stroke(255)
 
     p.fill(0)
