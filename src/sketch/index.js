@@ -1,11 +1,13 @@
+import '../globals'
+import 'p5/lib/addons/p5.sound'
+import * as p5 from 'p5'
+
 const sketch = (p) => {
   const w = window.innerWidth
   const h = window.innerHeight
   let rows = 0
   let cols = 0
-
   const scale = 20
-
   let terrain = []
   let flyingSpeed = 0
 
@@ -13,8 +15,14 @@ const sketch = (p) => {
   let heightSlider
   let depthSlider
 
+  let mic
   p.setup = function setup() {
     p.createCanvas(w, h, p.WEBGL)
+
+    //*audio in
+
+    mic = new p5.AudioIn()
+    mic.start()
     //*set number of columns and rows to width / height divided by the scale of each triangle
     cols = w / scale
     rows = h / scale
