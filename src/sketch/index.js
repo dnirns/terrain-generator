@@ -3,11 +3,11 @@ import 'p5/lib/addons/p5.sound'
 import * as p5 from 'p5'
 
 const sketch = (p) => {
-  const w = window.innerWidth * 1.5
+  const w = window.innerWidth
   const h = window.innerHeight
   let rows = 0
   let cols = 0
-  const scale = 20
+  const scale = 25
   let terrain = []
   let flyingSpeed = 0
 
@@ -26,6 +26,7 @@ const sketch = (p) => {
 
   p.setup = function setup() {
     p.createCanvas(w, h, p.WEBGL)
+
     sound = p.loadSound('song.mp3')
     //*assign amplitude as a new instance of the p5 Amplitude function
     fft = new p5.FFT()
@@ -92,7 +93,7 @@ const sketch = (p) => {
       }
       yoff += 0.1
     }
-    p.background('rgb(163, 204, 254)')
+    p.background('rgb(113, 77, 242)')
     p.stroke(255)
 
     p.fill(0)
@@ -100,7 +101,7 @@ const sketch = (p) => {
     //* rotate sketch along x axis
     p.rotateX(p.PI / 4)
     //* move sketch to align center after the rotation
-    p.translate(-w / 1.4, -h / 2 + 40)
+    p.translate(-w / 2, -h / 2 + 40)
     //* loop to draw grid of triangles
     for (let y = 0; y < rows - 1; y++) {
       p.beginShape(p.TRIANGLE_STRIP)
