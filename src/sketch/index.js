@@ -15,6 +15,16 @@ const sketch = (p) => {
   // let heightSlider
   // let depthSlider
 
+  //*color variables
+  const brightGreen = '#a7ff81'
+  const lightGreen = '#a6ff20'
+  const darkGreen = '#66bd40'
+  const red = '#ff390d'
+  const blue = '#5263ff'
+  const lightBlue = '#5ac5ff'
+  const yellow = '#ffe15a'
+  const orange = '#ff9524'
+
   //*variable for the audio source
   let sound
   let startButton
@@ -63,6 +73,8 @@ const sketch = (p) => {
     //*get treble and bass energy values from result of analysis
     let treble = fft.getEnergy('treble')
     let bass = fft.getEnergy('lowMid')
+    // let treble = 100
+    // let bass = 200
 
     //*assign energy values to variables to be used in terrain generation
     let depth = -bass * 1.5
@@ -81,8 +93,27 @@ const sketch = (p) => {
       }
       yoff += 0.1
     }
-    p.background('rgb(181, 187, 220)')
-    p.stroke(255)
+    p.background(0)
+
+    let strokeColor
+
+    height < 30
+      ? (strokeColor = red)
+      : height > 30 && height < 70
+      ? (strokeColor = orange)
+      : height > 70 && height < 100
+      ? (strokeColor = yellow)
+      : height > 100 && height < 130
+      ? (strokeColor = blue)
+      : height > 130 && height < 170
+      ? (strokeColor = lightBlue)
+      : height > 170 && height < 190
+      ? (strokeColor = darkGreen)
+      : height > 190 && height < 230
+      ? (strokeColor = lightGreen)
+      : (strokeColor = brightGreen)
+
+    p.stroke(strokeColor)
 
     p.fill(0)
 
